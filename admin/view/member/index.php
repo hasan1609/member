@@ -92,7 +92,7 @@ $member = query("SELECT * FROM member");
                 <form action="" method="post" enctype="multipart/form-data" id="form">
                     <div class="form-group">
                         <input type="hidden" name="id" id="id">
-                        <label for="">Unggah Sertifikat PPAM</label>
+                        <label for="">Unggah Sertifikat</label>
                         <input type="file" class="form-control" placeholder="" id="foto_ppam" name="foto_ppam" />
                     </div>
                     <img id="preview3" src="#" style="width: 100px; margin: 10px;" alt="Gambar Anda"><br>

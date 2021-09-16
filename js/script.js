@@ -8,7 +8,7 @@ $(function(){
         $("#form").on("submit", (function(e) {
             e.preventDefault();
             $.ajax({
-                url: 'http://localhost/member/member/admin/view/member/sertifikat_ppam.php',
+                url: 'http://localhost/member/member/dashboard/sertifikat_ppam.php',
                 type: 'POST',
                 data: new FormData(this),
                 contentType: false,
@@ -31,7 +31,7 @@ $(function(){
         $("#form").on("submit", (function(e) {
             e.preventDefault();
             $.ajax({
-                url: 'http://localhost/member/member/admin/view/member/sertifikat_taman.php',
+                url: 'http://localhost/member/member/dashboard/sertifikat_taman.php',
                 type: 'POST',
                 data: new FormData(this),
                 contentType: false,
