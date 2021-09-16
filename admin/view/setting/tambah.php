@@ -1,8 +1,9 @@
 <?php
 session_start();
 $header = "member";
-include '../layout/header.php';
 require 'proses.php';
+include 'akses.php';
+include '../layout/header.php';
 
 // cek apakah tombol submit sudah ditekan atau belum
 if (isset($_POST["submit"])) {
@@ -32,23 +33,23 @@ if (isset($_POST["submit"])) {
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" placeholder="Nama" id="nama" name="nama" required />
+                        <input type="text" class="form-control" placeholder="Nama" id="nama" name="nama" />
                     </div>
                     <div class="form-group">
                         <label for="nama">Username</label>
-                        <input type="text" class="form-control" placeholder="Username" id="username" name="username" required />
+                        <input type="text" class="form-control" placeholder="Username" id="username" name="username" />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" placeholder="example@gmail.com" id="email" name="email" required />
+                        <input type="email" class="form-control" placeholder="example@gmail.com" id="email" name="email" />
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" placeholder="*****" id="password" name="password" required />
+                        <input type="password" class="form-control" placeholder="*****" id="password" name="password" />
                     </div>
                     <div class="form-group">
                         <label for="password">Konfirmasi Password Password</label>
-                        <input type="password" class="form-control" placeholder="*****" id="password2" name="password2" required />
+                        <input type="password" class="form-control" placeholder="*****" id="password2" name="password2" />
                     </div>
                     <div class="form-group">
                         <label for="jabatan">Role</label>

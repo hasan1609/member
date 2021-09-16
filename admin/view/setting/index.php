@@ -2,6 +2,7 @@
 session_start();
 $header = "setting";
 require 'proses.php';
+include 'akses.php';
 include '../layout/header.php';
 $admin = query("SELECT * FROM admin");
 ?>

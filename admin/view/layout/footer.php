@@ -60,17 +60,66 @@
 <!-- Page level custom scripts -->
 <script src="../../js/demo/datatables-demo.js"></script>
 
+<!-- upload sertif -->
+<script src="../../js/script.js"></script>
 
-<!-- preview gambar -->
+
 <script>
     function text(x) {
-        if (x == 0) document.getElementById("sub_kat").style.display = "block";
-        else document.getElementById("sub_kat").style.display = "none";
+        if (x == 0) {
+            document.getElementById("kamar").style.display = "block";
+            document.getElementById("asrama").style.display = "block";
+        } else {
+            document.getElementById("kamar").style.display = "none";
+            document.getElementById("asrama").style.display = "none";
+        }
         return;
     }
 </script>
 
-<!-- view Image -->
+<!-- status mhasiswa -->
+<script>
+    function mhs(x) {
+        if (x == 0) {
+            document.getElementById("univ").style.display = "block";
+            document.getElementById("fakultas").style.display = "block";
+            document.getElementById("jurusan").style.display = "block";
+            document.getElementById("smt").style.display = "block";
+        } else {
+            document.getElementById("univ").style.display = "none";
+            document.getElementById("fakultas").style.display = "none";
+            document.getElementById("jurusan").style.display = "none";
+            document.getElementById("smt").style.display = "none";
+        }
+        return;
+    }
+</script>
+
+<!-- Status Anggota -->
+<script>
+    function status(x) {
+        if (x == 0) document.getElementById("departemen").style.display = "block";
+        else document.getElementById("departemen").style.display = "none";
+        return;
+    }
+</script>
+<!-- sertif ppam -->
+<script>
+    function ppam(x) {
+        if (x == 0) document.getElementById("foto_ppamku").style.display = "block";
+        else document.getElementById("foto_ppamku").style.display = "none";
+        return;
+    }
+</script>
+<script>
+    function taman(x) {
+        if (x == 0) document.getElementById("foto_tamanku").style.display = "block";
+        else document.getElementById("foto_tamanku").style.display = "none";
+        return;
+    }
+</script>
+
+<!-- preview gambar -->
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -84,6 +133,36 @@
     }
     $("#foto").change(function() {
         readURL(this);
+    });
+</script>
+<script>
+    function readURL2(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#preview2').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#foto_taman").change(function() {
+        readURL2(this);
+    });
+</script>
+<script>
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#preview3').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#foto_ppam").change(function() {
+        readURL1(this);
     });
 </script>
 

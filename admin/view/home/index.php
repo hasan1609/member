@@ -19,7 +19,7 @@ include '../layout/header.php';
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <?php
-                        $query2 = mysqli_query($koneksi, "SELECT * FROM user");
+                        $query2 = mysqli_query($koneksi, "SELECT * FROM member");
                         $count2 = mysqli_num_rows($query2);
                         ?>
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">

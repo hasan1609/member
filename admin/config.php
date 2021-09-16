@@ -4,7 +4,7 @@
 $server = "localhost";  //definisi server lokal.
 $user = "root";  //definisi user.
 $pass = ""; //definisi password (menyesuaikan).
-$db = "member";  //definisi database yang telah dibuat tadi.
+$db = "matan";  //definisi database yang telah dibuat tadi.
 //mengkoneksikan server lokal.
 $koneksi = mysqli_connect($server, $user, $pass, $db);
 //memilih database.

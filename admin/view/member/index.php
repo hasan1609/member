@@ -4,7 +4,7 @@ include 'akses.php';
 $header = "member";
 include 'proses.php';
 include '../layout/header.php';
-$member = query("SELECT * FROM user");
+$member = query("SELECT * FROM member");
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -27,9 +27,10 @@ $member = query("SELECT * FROM user");
                             <th>No</th>
                             <th>Nama</th>
                             <th>Tlp</th>
-                            <th>Jurusan</th>
-                            <th>Alamat</th>
-                            <th>Jabatan</th>
+                            <th>Status Pendidikan</th>
+                            <th>Status Anggota</th>
+                            <th>PPAM</th>
+                            <th>Taman Cinta</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
@@ -40,18 +41,28 @@ $member = query("SELECT * FROM user");
                             <tr>
                                 <td><?= $no; ?></td>
                                 <td><?= $data['nama'] ?></td>
-                                <td><?= $data['nohp'] ?></td>
-                                <td><?= $data['jurusan'] ?></td>
-                                <td><?= $data['alamat'] ?></td>
-                                <td><?= $data['jabatan'] ?></td>
+                                <td><?= $data['tlp'] ?></td>
+                                <td><?= $data['status_p'] ?></td>
+                                <td><?= $data['status_anggota'] ?></td>
+                                <?php if ($data['sertifikat_ppam'] == "ya") {
+                                    echo "<td><i class='fas fa-check-square text-center'></i></td>";
+                                } else {
+                                    echo '<td><a id="editPpam" href="" data-id="' . $data['id_member'] . '" class="btn btn-primary modalPpam" data-toggle="modal" data-target="#modalKu">Upload</a></td>';
+                                }
+                                if ($data['sertifikat_taman'] == "ya") {
+                                    echo "<td><i class='fas fa-check-square'></i></td>";
+                                } else {
+                                    echo '<td><a href="" id="editTaman" data-id="' . $data['id_member'] . '" class="btn btn-primary modalTaman" data-toggle="modal" data-target="#modalKu">Upload</a></td>';
+                                }
+                                ?>
                                 <td>
-                                    <a href="detail.php?id=<?= $data['id_user'] ?>" class="btn btn-info btn-circle btn-sm">
+                                    <a href="detail.php?id=<?= $data['id_member'] ?>" class="btn btn-info btn-circle btn-sm">
                                         <i class=" fas fa-eye"></i>
                                     </a>
-                                    <a href="edit.php?id=<?= $data['id_user'] ?>" class="btn btn-primary btn-circle btn-sm">
+                                    <a href="edit.php?id=<?= $data['id_member'] ?>" class="btn btn-primary btn-circle btn-sm">
                                         <i class=" fas fa-edit"></i>
                                     </a>
-                                    <a href="hapus.php?id=<?= $data['id_user']; ?>&foto=<?= $data['foto']; ?>" class="btn btn-danger btn-circle btn-sm" onclick="return confirm('Yakin ingin menghapus ?')">
+                                    <a href="hapus.php?id=<?= $data['id_member']; ?>&foto=<?= $data['foto']; ?>&ppam=<?= $data['foto_ppam']; ?>&taman=<?= $data['foto_taman']; ?>" class="btn btn-danger btn-circle btn-sm" onclick="return confirm('Yakin ingin menghapus ?')">
                                         <i class=" fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -66,7 +77,37 @@ $member = query("SELECT * FROM user");
     </div>
 
     <!-- Content Row -->
+
 </div>
+<div class="modal fade" id="modalKu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data" id="form">
+                    <div class="form-group">
+                        <input type="hidden" name="id" id="id">
+                        <label for="">Unggah Sertifikat PPAM</label>
+                        <input type="file" class="form-control" placeholder="" id="foto_ppam" name="foto_ppam" />
+                    </div>
+                    <img id="preview3" src="#" style="width: 100px; margin: 10px;" alt="Gambar Anda"><br>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" name="tambah" id="tambah">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
 <!-- /.container-fluid -->
 
 <?php include '../layout/footer.php' ?>
