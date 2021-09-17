@@ -35,6 +35,18 @@ function tambah($data)
     $komisariat = htmlspecialchars($data['komisariat']);
     $kategori = htmlspecialchars($data['kategori']);
 
+    $nama = htmlspecialchars($data['nama']);
+    $date = date('y');
+    $qq = mysqli_query($koneksi, "SELECT max(no_induk) as maxkode FROM member");
+    $result = mysqli_fetch_array($qq);
+    $maxkode = $result['maxkode'];
+
+    $no = (int) substr($maxkode, -1);
+    $g = (int) substr($thn_angkatan, 0, 1);
+    $no++;
+    $jadi = $date . $g . sprintf("%04s", $no);
+
+
     $password = mysqli_real_escape_string($koneksi, $data["password"]);
     // cek username sudah ada atau belum
     $result = mysqli_query($koneksi, "SELECT email FROM member WHERE email = '$email'");
@@ -88,8 +100,8 @@ function tambah($data)
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO member(id_member, nama, email, password, tempat, ttl, tlp, alamat, jk, status_p, univ, fakultas, jurusan, smt, foto, status_anggota, departemen, thn_angkatan, sertifikat_ppam, foto_ppam, sertifikat_taman, foto_taman, komisariat, kategori, asrama, kamar)
-    VALUES('','$nama', '$email', '$password', '$tempat' ,'$ttl', '$tlp', '$alamat', '$jk', '$status_p', '$univ', '$fakultas', '$jurusan', '$smt', '$foto', '$status_anggota', '$departemen', '$thn_angkatan','$sertifikat_ppam','$foto_ppam', '$sertifikat_taman', '$foto_taman', '$komisariat', '$kategori','$asrama', '$kamar')";
+    $query = "INSERT INTO member(id_member, no_induk, nama, email, password, tempat, ttl, tlp, alamat, jk, status_p, univ, fakultas, jurusan, smt, foto, status_anggota, departemen, thn_angkatan, sertifikat_ppam, foto_ppam, sertifikat_taman, foto_taman, komisariat, kategori, asrama, kamar)
+    VALUES('', '$jadi','$nama', '$email', '$password', '$tempat' ,'$ttl', '$tlp', '$alamat', '$jk', '$status_p', '$univ', '$fakultas', '$jurusan', '$smt', '$foto', '$status_anggota', '$departemen', '$thn_angkatan','$sertifikat_ppam','$foto_ppam', '$sertifikat_taman', '$foto_taman', '$komisariat', '$kategori','$asrama', '$kamar')";
 
     mysqli_query($koneksi, $query);
 
@@ -98,7 +110,7 @@ function tambah($data)
 function hapus($id)
 {
     global $koneksi;
-    mysqli_query($koneksi, "DELETE FROM member WHERE id_member = '$id'");
+    mysqli_query($koneksi, "DELETE FROM user WHERE id_user = '$id'");
     return mysqli_affected_rows($koneksi);
 }
 
@@ -107,6 +119,7 @@ function ubah($data)
     global $koneksi;
 
     $id = $data["id_member"];
+    $no_induk = $data['no_induk'];
     $password = htmlspecialchars($data["password"]);
     $nama = htmlspecialchars($data['nama']);
     $email = htmlspecialchars($data["email"]);;
@@ -161,7 +174,7 @@ function ubah($data)
     }
 
     $query = "UPDATE member SET
-				id_member='$id', nama='$nama', email='$email', password='$password', tempat='$tempat', ttl='$ttl', tlp='$tlp', alamat='$alamat', jk='$jk', status_p='$status_p', univ='$univ', fakultas='$fakultas', jurusan='$jurusan', smt='$smt', foto='$gambar', status_anggota='$status_anggota', departemen='$departemen', thn_angkatan='$thn_angkatan', sertifikat_ppam='$sertifikat_ppam', foto_ppam='$foto_ppam', sertifikat_taman='$sertifikat_taman', foto_taman='$foto_taman', komisariat='$komisariat', kategori='$kategori', asrama='$asrama', kamar='$kamar'
+				id_member='$id',no_induk='$no_induk', nama='$nama', email='$email', password='$password', tempat='$tempat', ttl='$ttl', tlp='$tlp', alamat='$alamat', jk='$jk', status_p='$status_p', univ='$univ', fakultas='$fakultas', jurusan='$jurusan', smt='$smt', foto='$gambar', status_anggota='$status_anggota', departemen='$departemen', thn_angkatan='$thn_angkatan', sertifikat_ppam='$sertifikat_ppam', foto_ppam='$foto_ppam', sertifikat_taman='$sertifikat_taman', foto_taman='$foto_taman', komisariat='$komisariat', kategori='$kategori', asrama='$asrama', kamar='$kamar'
 			  WHERE id_member = '$id'
 			";
 
@@ -268,4 +281,22 @@ function uploadTaman()
     $rename .= $extGambar;
     move_uploaded_file($tmp, '../../img/taman/' . $rename);
     return $rename;
+}
+
+function tambahPpam($data)
+{
+    global $koneksi;
+
+    $id = $data["id_member"];
+    $sertifikat_ppam = "ya";
+    $foto_ppam = uploadPpam();
+    if (!$foto_ppam) {
+        return false;
+    }
+    $query = "UPDATE member SET foto_ppam='$foto_ppam', sertifikat_ppam = '$sertifikat_ppam' WHERE id_member = '$id'
+			";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
 }

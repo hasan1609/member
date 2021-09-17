@@ -68,6 +68,21 @@ $row = query("SELECT * FROM member WHERE email = '$_SESSION[email]'")[0];
                             <table>
                                 <tr>
                                     <td>
+                                        <h3 class="h6 text-gray-900">No.Induk
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h3 class="h6 text-gray-900"> :
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h3 class="h6 text-gray-900"><?= ucfirst($row['no_induk']) ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <h3 class="h6 text-gray-900">Nama
                                     </td>
                                     <td></td>

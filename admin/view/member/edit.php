@@ -44,7 +44,8 @@ if (isset($_POST["submit"])) {
         <div class="card-body">
             <form action="" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id_member" id="id_member" value="<?= $member['id_member'] ?>">
-                <input type="hidden" name="password" id="id_member" value="<?= $member['password'] ?>">
+                <input type="hidden" name="password" id="password" value="<?= $member['password'] ?>">
+                <input type="hidden" name="no_induk" id="no_induk" value="<?= $member['no_induk'] ?>">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

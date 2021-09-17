@@ -35,6 +35,18 @@ function tambah($data)
     $komisariat = htmlspecialchars($data['komisariat']);
     $kategori = htmlspecialchars($data['kategori']);
 
+    $nama = htmlspecialchars($data['nama']);
+    $date = date('y');
+    $qq = mysqli_query($koneksi, "SELECT max(no_induk) as maxkode FROM member");
+    $result = mysqli_fetch_array($qq);
+    $maxkode = $result['maxkode'];
+
+    $no = (int) substr($maxkode, -1);
+    $g = (int) substr($thn_angkatan, 0, 1);
+    $no++;
+    $jadi = $date . $g . sprintf("%04s", $no);
+
+
     $password = mysqli_real_escape_string($koneksi, $data["password"]);
     // cek username sudah ada atau belum
     $result = mysqli_query($koneksi, "SELECT email FROM member WHERE email = '$email'");
@@ -88,8 +100,83 @@ function tambah($data)
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO member(id_member, nama, email, password, tempat, ttl, tlp, alamat, jk, status_p, univ, fakultas, jurusan, smt, foto, status_anggota, departemen, thn_angkatan, sertifikat_ppam, foto_ppam, sertifikat_taman, foto_taman, komisariat, kategori, asrama, kamar)
-    VALUES('','$nama', '$email', '$password', '$tempat' ,'$ttl', '$tlp', '$alamat', '$jk', '$status_p', '$univ', '$fakultas', '$jurusan', '$smt', '$foto', '$status_anggota', '$departemen', '$thn_angkatan','$sertifikat_ppam','$foto_ppam', '$sertifikat_taman', '$foto_taman', '$komisariat', '$kategori','$asrama', '$kamar')";
+    $query = "INSERT INTO member(id_member, no_induk, nama, email, password, tempat, ttl, tlp, alamat, jk, status_p, univ, fakultas, jurusan, smt, foto, status_anggota, departemen, thn_angkatan, sertifikat_ppam, foto_ppam, sertifikat_taman, foto_taman, komisariat, kategori, asrama, kamar)
+    VALUES('', '$jadi','$nama', '$email', '$password', '$tempat' ,'$ttl', '$tlp', '$alamat', '$jk', '$status_p', '$univ', '$fakultas', '$jurusan', '$smt', '$foto', '$status_anggota', '$departemen', '$thn_angkatan','$sertifikat_ppam','$foto_ppam', '$sertifikat_taman', '$foto_taman', '$komisariat', '$kategori','$asrama', '$kamar')";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+function hapus($id)
+{
+    global $koneksi;
+    mysqli_query($koneksi, "DELETE FROM user WHERE id_user = '$id'");
+    return mysqli_affected_rows($koneksi);
+}
+
+function ubah($data)
+{
+    global $koneksi;
+
+    $id = $data["id_member"];
+    $no_induk = $data['no_induk'];
+    $password = htmlspecialchars($data["password"]);
+    $nama = htmlspecialchars($data['nama']);
+    $email = htmlspecialchars($data["email"]);;
+    $tempat = htmlspecialchars($data['tempat']);
+    $ttl = htmlspecialchars($data['ttl']);
+    $tlp = htmlspecialchars($data['tlp']);
+    $alamat = htmlentities($data['alamat']);
+    $jk = htmlspecialchars($data['jk']);
+
+    $status_p = htmlspecialchars($data['status_p']);
+
+    $status_anggota = htmlspecialchars($data['status_anggota']);
+
+    $thn_angkatan = htmlspecialchars($data['thn_angkatan']);
+    $sertifikat_ppam = htmlspecialchars($data['sertifikat_ppam']);
+    $sertifikat_taman = htmlspecialchars($data['sertifikat_taman']);
+    $komisariat = htmlspecialchars($data['komisariat']);
+    $kategori = htmlspecialchars($data['kategori']);
+    $fotolama = $data["foto_lama"];
+    $foto_ppam = $data["foto_ppam"];
+    $foto_taman = $data["foto_taman"];
+    if ($status_p == "mahasiswa") {
+        $univ = htmlspecialchars($data['univ']);
+        $fakultas = htmlspecialchars($data['fakultas']);
+        $jurusan = htmlspecialchars($data['jurusan']);
+        $smt = htmlspecialchars($data['smt']);
+    } else {
+        $univ = '';
+        $fakultas = '';
+        $jurusan = '';
+        $smt = '';
+    };
+    if ($status_anggota == "Pengurus") {
+        $departemen = htmlspecialchars($data['departemen']);
+    } else {
+        $departemen = '';
+    };
+    if ($kategori == "pondok") {
+        $asrama = htmlspecialchars($data['asrama']);
+        $kamar = htmlspecialchars($data['kamar']);
+    } else {
+        $asrama = '';
+        $kamar = '';
+    }
+
+    // upload gambar
+    if ($_FILES['foto']['error'] === 4) {
+        $gambar = $fotolama;
+    } else {
+        unlink("../../img/profil/$fotolama");
+        $gambar = uploadFoto();
+    }
+
+    $query = "UPDATE member SET
+				id_member='$id',no_induk='$no_induk', nama='$nama', email='$email', password='$password', tempat='$tempat', ttl='$ttl', tlp='$tlp', alamat='$alamat', jk='$jk', status_p='$status_p', univ='$univ', fakultas='$fakultas', jurusan='$jurusan', smt='$smt', foto='$gambar', status_anggota='$status_anggota', departemen='$departemen', thn_angkatan='$thn_angkatan', sertifikat_ppam='$sertifikat_ppam', foto_ppam='$foto_ppam', sertifikat_taman='$sertifikat_taman', foto_taman='$foto_taman', komisariat='$komisariat', kategori='$kategori', asrama='$asrama', kamar='$kamar'
+			  WHERE id_member = '$id'
+			";
 
     mysqli_query($koneksi, $query);
 

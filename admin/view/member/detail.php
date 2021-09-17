@@ -55,6 +55,21 @@ $row = query("SELECT * FROM member WHERE id_member = '$_GET[id]'")[0];
                             </tr>
                             <tr>
                                 <td>
+                                    <h3 class="h6 text-gray-900">No.Induk
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <h3 class="h6 text-gray-900"> :
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <h3 class="h6 text-gray-900"><?= ucfirst($row['no_induk']) ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <h3 class="h6 text-gray-900">Email
                                 </td>
                                 <td></td>
