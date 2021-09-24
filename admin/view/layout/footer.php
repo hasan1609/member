@@ -61,7 +61,7 @@
 <script src="../../js/demo/datatables-demo.js"></script>
 
 <!-- upload sertif -->
-<script src="../../js/script.js"></script>
+<!-- <script src="../../js/script.js"></script> -->
 
 
 <script>
@@ -188,6 +188,22 @@
         }
     }
 </script>
+
+<script>
+    $('.modalPpam').on('click', function() {
+        let id = $(this).data('id');
+
+        $('.modal-body #id').val(id);
+    })
+</script>
+<script>
+    $('.modalTaman').on('click', function() {
+        let id = $(this).data('id');
+
+        $('.modal-body #id').val(id);
+    })
+</script>
+
 </body>
 
 </html>

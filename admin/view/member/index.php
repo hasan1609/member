@@ -5,6 +5,42 @@ $header = "member";
 include 'proses.php';
 include '../layout/header.php';
 $member = query("SELECT * FROM member");
+if (isset($_POST["tambah"])) {
+    // cek apakah data berhasil di tambahkan atau tidak
+    if (ubahPpam($_POST) > 0) {
+        echo "
+			<script>
+				alert('Sertifikat berhasil ditambahkan!');
+                document.location.href = 'index.php';
+			</script>
+		";
+    } else {
+        echo "
+			<script>
+				alert('data gagal ditambahkan!');
+                document.location.href = 'tambah.php';
+			</script>
+		";
+    }
+}
+if (isset($_POST["tambahtaman"])) {
+    // cek apakah data berhasil di tambahkan atau tidak
+    if (ubahTaman($_POST) > 0) {
+        echo "
+			<script>
+				alert('Sertifikat berhasil ditambahkan!');
+                document.location.href = 'index.php';
+			</script>
+		";
+    } else {
+        echo "
+			<script>
+				alert('data gagal ditambahkan!');
+                document.location.href = 'tambah.php';
+			</script>
+		";
+    }
+}
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -52,7 +88,7 @@ $member = query("SELECT * FROM member");
                                 if ($data['sertifikat_taman'] == "ya") {
                                     echo "<td><i class='fas fa-check-square'></i></td>";
                                 } else {
-                                    echo '<td><a href="" id="editTaman" data-id="' . $data['id_member'] . '" class="btn btn-primary modalTaman" data-toggle="modal" data-target="#modalKu">Upload</a></td>';
+                                    echo '<td><a href="" id="editTaman" data-id="' . $data['id_member'] . '" class="btn btn-primary modalTaman" data-toggle="modal" data-target="#modaltaman">Upload</a></td>';
                                 }
                                 ?>
                                 <td>
@@ -83,7 +119,7 @@ $member = query("SELECT * FROM member");
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel"></h5>
+                <h5 class="modal-title" id="modalLabel">Upload Sertifikat PPAM</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -105,9 +141,30 @@ $member = query("SELECT * FROM member");
     </div>
 </div>
 
-<script>
-
-</script>
-<!-- /.container-fluid -->
+<div class="modal fade" id="modaltaman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Sertifikat Taman</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data" id="form">
+                    <div class="form-group">
+                        <input type="hidden" name="id" id="id">
+                        <label for="">Unggah Sertifikat</label>
+                        <input type="file" class="form-control" placeholder="" id="foto_taman" name="foto_taman" />
+                    </div>
+                    <img id="preview2" src="#" style="width: 100px; margin: 10px;" alt="Gambar Anda"><br>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" name="tambahtaman" id="tambahtaman">Upload</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <?php include '../layout/footer.php' ?>

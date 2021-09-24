@@ -42,7 +42,7 @@ function tambah($data)
     $maxkode = $result['maxkode'];
 
     $no = (int) substr($maxkode, -1);
-    $g = (int) substr($thn_angkatan, 0, 1);
+    $g = (int) substr($thn_angkatan, -2);
     $no++;
     $jadi = $date . $g . sprintf("%04s", $no);
 
@@ -110,7 +110,7 @@ function tambah($data)
 function hapus($id)
 {
     global $koneksi;
-    mysqli_query($koneksi, "DELETE FROM user WHERE id_user = '$id'");
+    mysqli_query($koneksi, "DELETE FROM member WHERE id_member = '$id'");
     return mysqli_affected_rows($koneksi);
 }
 
@@ -283,18 +283,34 @@ function uploadTaman()
     return $rename;
 }
 
-function tambahPpam($data)
+function ubahPpam($data)
 {
     global $koneksi;
 
-    $id = $data["id_member"];
-    $sertifikat_ppam = "ya";
-    $foto_ppam = uploadPpam();
-    if (!$foto_ppam) {
+    $id = $data["id"];
+    $sertifikat = "ya";
+    $foto = uploadPpam();
+    if (!$foto) {
         return false;
     }
-    $query = "UPDATE member SET foto_ppam='$foto_ppam', sertifikat_ppam = '$sertifikat_ppam' WHERE id_member = '$id'
-			";
+    $query = "UPDATE member SET sertifikat_ppam = '$sertifikat', foto_ppam='$foto' WHERE id_member='$id' ";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function ubahTaman($data)
+{
+    global $koneksi;
+
+    $id = $data["id"];
+    $sertifikat = "ya";
+    $foto = uploadTaman();
+    if (!$foto) {
+        return false;
+    }
+    $query = "UPDATE member SET sertifikat_taman = '$sertifikat', foto_taman='$foto' WHERE id_member='$id' ";
 
     mysqli_query($koneksi, $query);
 
